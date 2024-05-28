@@ -1,0 +1,249 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My TV Channels</title>
+    <link href="https://vjs.zencdn.net/7.15.4/video-js.css" rel="stylesheet" />
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 20px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .button-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        .button-container a {
+            display: flex;
+            align-items: center;
+            padding: 10px 20px;
+            font-size: 16px;
+            cursor: pointer;
+            border: none;
+            border-radius: 5px;
+            background-color: #007BFF;
+            color: white;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+            text-decoration: none;
+        }
+        .button-container a:hover {
+            background-color: #0056b3;
+        }
+        .button-container img {
+            margin-right: 10px;
+            width: 24px;
+            height: 24px;
+        }
+        .channel-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px; /* Add margin to create space */
+        }
+        .video-js, iframe {
+            width: 640px;
+            height: 480px;
+        }
+    </style>
+</head>
+<body>
+    <h1>My TV Channels</h1>
+    <div class="channel-container">
+        <div class="button-container">
+            <button onclick="scrollToBottom()">Ver todos os canais</button>
+            <button onclick="reloadWithCurrentChannel()">Recarregar</button>
+            <button id="increaseBufferBtn">Aumentar Buffer</button>
+        </div>
+        <div id="player-container">
+            <video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" data-setup='{}'>
+                <source src="https://stream.ichibantv.com:3764/hybrid/play.m3u8" type="application/x-mpegURL">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+    <div class="button-container">
+        <a href="#" data-src="https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/5f12151794c1800007a8ae63/master.m3u8" data-type="m3u8"><img src="logo1.png" alt="Geekdot Logo">Nick classicos</a>
+        <a href="#" data-src="https://stream.ichibantv.com:3764/hybrid/play.m3u8" data-type="m3u8"><img src="logo1.png" alt="Geekdot Logo">Geekdot</a>
+        <a href="#" data-src="https://stmv1.srvif.com/loadingtv/loadingtv/playlist.m3u8" data-type="m3u8"><img src="logo2.png" alt="Loading TV Logo">Loading TV</a>
+        <a href="#" data-src="https://stmv1.srvif.com/emlsilva/emlsilva/playlist.m3u8" data-type="m3u8"><img src="logo3.png" alt="Fox Kids Logo">Fox Kids</a>
+        <a id="wordingTvButton" href="#" data-src="https://tv02.zas.media:1936/wordingtv/wordingtv/playlist.m3u8" data-type="m3u8"><img src="logo4.png" alt="Wording TV Logo">Wording TV</a>
+        <a href="#" data-src="https://stmv1.srvif.com/animetv/animetv/playlist.m3u8" data-type="m3u8"><img src="logo5.png" alt="Anime TV Logo">Anime TV</a>
+        <a href="#" data-src="https://video07.logicahost.com.br/redebrasil/redebrasil/playlist.m3u8" data-type="m3u8"><img src="logo6.png" alt="Rede Brasil Logo">Rede Brasil</a>
+        <a href="#" data-src="https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/62545c0b002f4b0007688b61/master.m3u8?advertisingId={PSID}&appVersion=unknown&deviceDNT={TARGETOPT}&deviceId={PSID}&deviceLat=0&deviceLon=0&deviceMake=samsung&deviceModel=samsung&deviceType=samsung-tvplus&deviceVersion=unknown" data-type="m3u8"><img src="logo6.png" alt="Bob esponja Logo">Bob esponja</a>
+        <a href="#" data-src="https://service-stitcher.clusters.pluto.tv/v1/stitch/embed/hls/channel/63221e41af69b500076f84e7/master.m3u8?deviceId=channel&deviceModel=web&deviceVersion=1.0&appVersion=1.0&deviceType=rokuChannel&deviceMake=rokuChannel&deviceDNT=18" data-type="m3u8"><img src="logo6.png" alt="Os Padrinhos magicos Logo">Os Padrinhos magicos</a>
+        <a href="#" data-src="https://stmv1.srvif.com/retrotv/retrotv/playlist.m3u8" data-type="m3u8"><img src="logo7.png" alt="Desenho Retro Logo">Desenho Retro</a>
+        <a href="#" data-src="https://stmv1.srvif.com/xtremetv/xtremetv/playlist.m3u8" data-type="m3u8"><img src="logo8.png" alt="TV Extreme Logo">TV Extreme</a>
+        <a href="#" data-src="https://stmv1.conectastreaming.com/hitstv/hitstv/playlist.m3u8" data-type="m3u8"><img src="logo9.png" alt="Cinepix Filmes e Séries Logo">Cinepix Filmes e Séries</a>
+        <a href="#" data-src="https://ythlsgo.onrender.com/channel/UCsRfBAspa72ExrsN347W2xg.m3u8" data-type="m3u8"><img src="logo10.png" alt="SBT Rio Logo">SBT Rio</a>
+        <a href="#" data-src="https://stmv1.srvif.com/tvserie/tvserie/playlist.m3u8" data-type="m3u8"><img src="logo11.png" alt="Rede Manchete Logo">Rede Manchete</a>
+        <a href="#" data-src="https://stmv1.srvif.com/jetsontv/jetsontv/playlist.m3u8" data-type="m3u8"><img src="logo12.png" alt="Os Jetsons 24h Logo">Os Jetsons 24h</a>
+        <a href="#" data-src="https://stmv1.srvif.com/otaku/otaku/playlist.m3u8" data-type="m3u8"><img src="logo13.png" alt="Otaku TV Logo">Otaku TV</a>
+        <a href="#" data-src="https://www.dailymotion.com/embed/video/x7wjrui?autoplay=1&queue-enable=false" data-type="iframe"><img src="logo14.png" alt="Rádio 89 Logo">Rádio 89</a>
+        <!-- Novo canal adicionado -->
+        <a href="#" data-src="webtv.html" data-type="iframe"><img src="logo15.png" alt="WebTV Logo">WebTV</a>
+    </div>
+    <script src="https://vjs.zencdn.net/7.15.4/video.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/videojs-contrib-hls/5.15.0/videojs-contrib-hls.min.js"></script>
+    <script>
+        let currentPlayer = null;
+
+        function scrollToVideo() {
+            const videoContainer = document.querySelector('.channel-container');
+            const offset = 42; // Adjust this value as needed to create extra space above the video
+            const bodyRect = document.body.getBoundingClientRect().top;
+            const elementRect = videoContainer.getBoundingClientRect().top;
+            const elementPosition = elementRect - bodyRect;
+            const offsetPosition = elementPosition + offset;
+
+            window.scrollTo({
+                top: offsetPosition,
+                behavior: 'smooth'
+            });
+        }
+
+        function scrollToTop() {
+            document.querySelector('h1').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function scrollToBottom() {
+            window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+            setTimeout(function() {
+                document.getElementById('wordingTvButton').focus();
+            }, 500);
+        }
+
+        function increaseBuffer() {
+            var player = videojs('videoPlayer');
+            var currentSrc = player.src();
+            player.dispose();
+
+            var newPlayer = videojs('videoPlayer', {
+                html5: {
+                    hls: {
+                        overrideNative: true,
+                        withCredentials: false,
+                        xhrSetup: function(xhr, url) {
+                            xhr.timeout = 90000; // Increase buffer timeout to 90 seconds
+                        }
+                    }
+                }
+            });
+
+            newPlayer.src({ src: currentSrc, type: 'application/x-mpegURL' });
+            newPlayer.ready(function() {
+                newPlayer.play();
+            });
+        }
+
+        function reloadWithCurrentChannel() {
+            var player = videojs('videoPlayer');
+            var currentSrc = player.src();
+            localStorage.setItem('currentChannel', currentSrc);
+            location.reload();
+        }
+
+        function stopCurrentPlayer() {
+            if (currentPlayer) {
+                if (currentPlayer.tagName.toLowerCase() === 'video') {
+                    const player = videojs(currentPlayer);
+                    player.pause();
+                    player.dispose();
+                } else if (currentPlayer.tagName.toLowerCase() === 'iframe') {
+                    currentPlayer.remove();
+                }
+            }
+        }
+
+        document.querySelectorAll('.button-container a').forEach(link => {
+            link.addEventListener('click', function(event) {
+                event.preventDefault();
+                var videoSrc = this.getAttribute('data-src');
+                var videoType = this.getAttribute('data-type');
+
+                stopCurrentPlayer();
+
+                var playerContainer = document.getElementById('player-container');
+
+                if (videoType === 'm3u8') {
+                    playerContainer.innerHTML = '<video id="videoPlayer" class="video-js vjs-default-skin" controls preload="auto" data-setup=\'{}\'></video>';
+                    currentPlayer = document.getElementById('videoPlayer');
+                    var player = videojs(currentPlayer);
+                    player.src({ src: videoSrc, type: 'application/x-mpegURL' });
+                    player.ready(function() {
+                        player.play();
+                    });
+                } else if (videoType === 'iframe') {
+                    playerContainer.innerHTML = `<iframe src="${videoSrc}" width="640" height="480" allow="autoplay"></iframe>`;
+                    currentPlayer = playerContainer.querySelector('iframe');
+                }
+
+                scrollToVideo();
+            });
+        });
+
+        var player = videojs('videoPlayer');
+        player.ready(function() {
+            var savedChannel = localStorage.getItem('currentChannel');
+            if (savedChannel) {
+                player.src({ src: savedChannel, type: 'application/x-mpegURL' });
+                player.ready(function() {
+                    player.play();
+                });
+            } else {
+                player.play();
+            }
+        });
+
+        player.hls.xhr.beforeRequest = function(options) {
+            options.timeout = 50000; // Set a longer timeout for buffering
+            return options;
+        };
+
+        player.hls.xhrSetup = function(xhr, url) {
+            xhr.withCredentials = false;
+            xhr.timeout = 50000; // Set a longer timeout for buffering
+        };
+
+        var hideControlsTimeout;
+        player.on('userinactive', function() {
+            hideControlsTimeout = setTimeout(function() {
+                player.controls(false);
+            }, 2000); // Hide controls after 2 seconds of inactivity
+        });
+
+        player.on('useractive', function() {
+            clearTimeout(hideControlsTimeout);
+            player.controls(true);
+        });
+
+        // Ensure controls are visible on fullscreen change
+        player.on('fullscreenchange', function() {
+            if (player.isFullscreen()) {
+                player.controls(true);
+            } else {
+                player.trigger('userinactive');
+            }
+        });
+
+        document.getElementById('increaseBufferBtn').addEventListener('click', function() {
+            increaseBuffer();
+        });
+
+        window.addEventListener('load', function() {
+            var player = videojs('videoPlayer');
+            player.ready(function() {
+                player.play();
+            });
+        });
+    </script>
+</body>
+</html>
